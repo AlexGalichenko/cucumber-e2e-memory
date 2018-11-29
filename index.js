@@ -1,3 +1,3 @@
-exports.Memory = require('./framework/memory/Memory');
-exports.AbstractConstantMap = require('./framework/memory/AbstractConstantMap');
-exports.AbstractCalculablesMap = require('./framework/memory/AbstractCalculablesMap');
+exports.Memory = require('./src/Memory');
+exports.AbstractConstantMap = require('./src/AbstractConstantMap');
+exports.AbstractCalculablesMap = require('./src/AbstractCalculablesMap');
