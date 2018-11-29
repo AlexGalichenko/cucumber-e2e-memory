@@ -1,0 +1,29 @@
+{
+  "name": "protractor-cucumber-boilerplate-memory",
+  "version": "0.0.1",
+  "description": "Memory model for protractor-cucumber-boilerplate project",
+  "main": "index.js",
+  "scripts": {
+    "docs": "jsdoc ./src/ -r -t ./node_modules/minami",
+    "test": "jest"
+  },
+  "keywords": [
+    "cucumber",
+    "protractor",
+    "memory"
+  ],
+  "author": "Alexander Galichenko",
+  "license": "MIT",
+  "devDependencies": {
+    "fs-extra": "^7.0.1",
+    "jest": "^23.6.0",
+    "jsdoc": "^3.5.5",
+    "minami": "^1.2.3"
+  },
+  "dependencies": {
+    "cucumber-tag-expressions": "^1.1.1",
+    "gherkin": "^5.1.0",
+    "glob": "^7.1.3",
+    "lodash": "^4.17.11"
+  }
+}
