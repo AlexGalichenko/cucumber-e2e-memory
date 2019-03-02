@@ -1,22 +1,22 @@
 const Memory = require("./Memory");
 
 /**
- * Class represneting Calculable Map
- * @abstract 
- * @type {AbstractCalculablesMap}
+ * Class represneting Computed Map
+ * @abstract
+ * @type {AbstractComputedMap}
  */
-class AbstractCalculablesMap {
+class AbstractComputedMap {
 
     constructor() {
-        this.calculables = [];
+        this.computed = [];
     }
 
     /**
      * Define calculable value
      * @param {RegExp} signature - signature of calculable
      * @param {Function} lambda - function to calculate calculable
-     * @example 
-     * class CalculablesMap extends AbstractCalculablesMap {
+     * @example
+     * class ComputedMap extends AbstractComputedMap {
      *   constructor() {
      *     super();
      *     this.defineCalculable(/^yourCalculable\(.+\)$/, args => {
@@ -25,19 +25,19 @@ class AbstractCalculablesMap {
      *   }
      * }
      */
-    defineCalculable(signature, lambda) {
-        this.calculables.push(new Calculable(signature, lambda))
+    defineComputed(signature, lambda) {
+        this.computed.push(new Computed(signature, lambda))
     }
 
     /**
-     * Get calculated value of defined calculable
-     * @param {string} signature - signature of calculable value
+     * Get calculated value of defined computed
+     * @param {string} signature - signature of computed value
      * @return {any} - calculated value
      */
-    getCalculable(signature) {
-        const calculable = this.calculables.find(item => item.signature.test(signature));
-        if (calculable) {
-            return calculable.lambda(...this._getArguments(signature));
+    getComputed(signature) {
+        const computed = this.computed.find(item => item.signature.test(signature));
+        if (computed) {
+            return computed.lambda(...this._getArguments(signature));
         } else {
             throw new Error(`Calculable ${signature} doesn't exist in memory`)
         }
@@ -60,31 +60,31 @@ class AbstractCalculablesMap {
     /**
      * Assign map to memory
      * @example
-     * class CalculablesMap extends AbstractCalculablesMap {
+     * class ComputedMap extends AbstractComputedMap {
      *   constructor() {
      *     super();
-     *     this.defineCalculable(/^numberOne$/, () => 1);
+     *     this.defineComputed(/^numberOne$/, () => 1);
      *   }
      *}
      *
-     * new CalculablesMap.init();
+     * new ComputedMap.init();
      */
     init() {
-        Memory.setCalculablesInstance(this);
+        Memory.setComputedInstance(this);
     }
 
 }
 
 /**
- * Class representing Calculable
- * @type {Calculable}
+ * Class representing Computed
+ * @type {Computed}
  */
-class Calculable {
+class Computed {
 
     /**
-     * Constructor of calculable
-     * @param signature {RegExp} - signature of calculable
-     * @param lambda {Function} - function to calculate calculable
+     * Constructor of computed
+     * @param signature {RegExp} - signature of computed
+     * @param lambda {Function} - function to calculate computed
      */
     constructor (signature, lambda) {
         this.signature = signature;
@@ -93,4 +93,4 @@ class Calculable {
 
 }
 
-module.exports = AbstractCalculablesMap;
+module.exports = AbstractComputedMap;

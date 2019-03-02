@@ -1,43 +1,43 @@
 const Memory = require("../src/Memory");
-const AbstractCalculablesMap = require("../src/AbstractCalculablesMap");
+const AbstractComputedMap = require("../src/AbstractComputedMap");
 
 test("get calculable", () => {
-    class CalculablesMap extends AbstractCalculablesMap {
+    class ComputedMap extends AbstractComputedMap {
         constructor() {
             super();
-            this.defineCalculable(/FUNCTION/, () => {
+            this.defineComputed(/FUNCTION/, () => {
                 return "value"
             });
         }
     }
-    Memory.setCalculablesInstance(new CalculablesMap());
+    Memory.setComputedInstance(new ComputedMap());
     expect(Memory.parseValue("#FUNCTION")).toBe("value");
 });
 
 test("get calculable with 1 arguments", () => {
-    class CalculablesMap extends AbstractCalculablesMap {
+    class CalculablesMap extends AbstractComputedMap {
         constructor() {
             super();
-            this.defineCalculable(/GET_SAME_VALUE\(.+\)/, (a) => a);
+            this.defineComputed(/GET_SAME_VALUE\(.+\)/, (a) => a);
         }
     }
-    Memory.setCalculablesInstance(new CalculablesMap());
+    Memory.setComputedInstance(new CalculablesMap());
     expect(Memory.parseValue("#GET_SAME_VALUE(value)")).toBe("value");
 });
 
 test("get calculable with 2 arguments", () => {
-    class CalculablesMap extends AbstractCalculablesMap {
+    class CalculablesMap extends AbstractComputedMap {
         constructor() {
             super();
-            this.defineCalculable(/CONCAT\(.+\)/, (a, b) => a + b);
+            this.defineComputed(/CONCAT\(.+\)/, (a, b) => a + b);
         }
     }
-    Memory.setCalculablesInstance(new CalculablesMap());
+    Memory.setComputedInstance(new CalculablesMap());
     expect(Memory.parseValue("#CONCAT(str, ing)")).toBe("string");
 });
 
 test("get not defined calculable", () => {
-    Memory.setCalculablesInstance(new AbstractCalculablesMap());
+    Memory.setComputedInstance(new AbstractComputedMap());
     function errorHandler() {
         Memory.parseValue("#notDefinedKey")
     }
@@ -45,7 +45,7 @@ test("get not defined calculable", () => {
 });
 
 test("get calculable when instance is not defined", () => {
-    Memory.calculablesInstance = undefined;
+    Memory.computedInstance = undefined;
     function errorHandler() {
         Memory.parseValue("#notDefinedKey")
     }
