@@ -6,11 +6,11 @@ class Memory {
 
     /**
      * Set calculable instance
-     * @example Memory.setCalculablesInstance(new yourCalculablesInstance())
-     * @param {AbstractCalculablesMap} calculablesInstance - instance of calculables map
+     * @example Memory.setComputedInstance(new yourComputedInstance())
+     * @param {AbstractComputedMap} computedInstance - instance of computed map
      */
-    static setCalculablesInstance(calculablesInstance) {
-        this.calculablesInstance = calculablesInstance;
+    static setComputedInstance(computedInstance) {
+        this.computedInstance = computedInstance;
     }
 
     /**
@@ -50,7 +50,7 @@ class Memory {
             const [_, prefix, parsedKey] = key.match(MEMORY_REGEXP);
             switch (prefix) {
                 case "$": return this._getMemoryValue(parsedKey);
-                case "#": return this._getCalculableValue(parsedKey);
+                case "#": return this._getComputedValue(parsedKey);
                 case "!": return this._getConstantValue(parsedKey);
                 case "!!": return this._getFileConstantValue(parsedKey);
                 case undefined: return parsedKey;
@@ -81,11 +81,11 @@ class Memory {
      * @return {string|number|Object} - value by key
      * @private
      */
-    static _getCalculableValue(alias) {
-        if (this.calculablesInstance) {
-            return this.calculablesInstance.getCalculable(alias)
+    static _getComputedValue(alias) {
+        if (this.computedInstance) {
+            return this.computedInstance.getComputed(alias)
         }
-        else throw new Error(`Instance of calculables is not defined`)
+        else throw new Error(`Instance of computed is not defined`)
     }
 
     /**
