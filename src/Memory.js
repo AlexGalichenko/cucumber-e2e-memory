@@ -6,8 +6,8 @@ class Memory {
 
     /**
      * Set calculable instance
-     * @example Memory.setComputedInstance(new yourCalculablesInstance())
-     * @param {AbstractComputedMap} computedInstance - instance of calculables map
+     * @example Memory.setComputedInstance(new yourComputedInstance())
+     * @param {AbstractComputedMap} computedInstance - instance of computed map
      */
     static setComputedInstance(computedInstance) {
         this.computedInstance = computedInstance;
@@ -85,7 +85,7 @@ class Memory {
         if (this.computedInstance) {
             return this.computedInstance.getComputed(alias)
         }
-        else throw new Error(`Instance of calculables is not defined`)
+        else throw new Error(`Instance of computed is not defined`)
     }
 
     /**

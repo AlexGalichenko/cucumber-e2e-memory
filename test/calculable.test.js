@@ -1,5 +1,5 @@
-const Memory = require("../src/Memory");
-const AbstractComputedMap = require("../src/AbstractComputedMap");
+const Memory = require("../lib/Memory");
+const AbstractComputedMap = require("../lib/AbstractComputedMap");
 
 test("get calculable", () => {
     class ComputedMap extends AbstractComputedMap {
@@ -41,7 +41,7 @@ test("get not defined calculable", () => {
     function errorHandler() {
         Memory.parseValue("#notDefinedKey")
     }
-    expect(errorHandler).toThrowError("Calculable notDefinedKey doesn't exist in memory");
+    expect(errorHandler).toThrowError("Computed notDefinedKey doesn't exist in memory");
 });
 
 test("get calculable when instance is not defined", () => {
@@ -49,5 +49,5 @@ test("get calculable when instance is not defined", () => {
     function errorHandler() {
         Memory.parseValue("#notDefinedKey")
     }
-    expect(errorHandler).toThrowError("Instance of calculables is not defined");
+    expect(errorHandler).toThrowError("Instance of computed is not defined");
 });

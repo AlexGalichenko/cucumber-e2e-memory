@@ -1,20 +1,48 @@
 {
   "name": "@cucumber-e2e/memory",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Memory model for protractor-cucumber-boilerplate project",
   "main": "index.js",
   "scripts": {
     "docs": "jsdoc ./src/ -r -t ./node_modules/minami",
-    "test": "jest"
+    "test": "jest",
+    "build": "babel src -d lib",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "cucumber",
     "protractor",
     "memory"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": "6"
+          }
+        }
+      ]
+    ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "<rootDir>/.+/"
+    ]
+  },
+  "engines" : {
+    "node" : ">=6.0.0"
+  },
   "author": "Alexander Galichenko",
   "license": "MIT",
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
     "fs-extra": "^7.0.1",
     "jest": "^23.6.0",
     "jsdoc": "^3.5.5",

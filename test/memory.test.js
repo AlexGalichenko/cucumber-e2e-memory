@@ -1,4 +1,4 @@
-const Memory = require("../src/Memory");
+const Memory = require("../lib/Memory");
 
 test("define memory variable", () => {
     Memory.setValue("key", 1);

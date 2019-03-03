@@ -1,7 +1,7 @@
 const Memory = require("./Memory");
 
 /**
- * Class represneting Computed Map
+ * Class representing Computed Map
  * @abstract
  * @type {AbstractComputedMap}
  */
@@ -12,14 +12,14 @@ class AbstractComputedMap {
     }
 
     /**
-     * Define calculable value
-     * @param {RegExp} signature - signature of calculable
-     * @param {Function} lambda - function to calculate calculable
+     * Define computed value
+     * @param {RegExp} signature - signature of computed
+     * @param {Function} lambda - function to calculate computed
      * @example
      * class ComputedMap extends AbstractComputedMap {
      *   constructor() {
      *     super();
-     *     this.defineCalculable(/^yourCalculable\(.+\)$/, args => {
+     *     this.defineCalculable(/^yourComputed\(.+\)$/, args => {
      *       console.log(args);
      *     })
      *   }
@@ -39,7 +39,7 @@ class AbstractComputedMap {
         if (computed) {
             return computed.lambda(...this._getArguments(signature));
         } else {
-            throw new Error(`Calculable ${signature} doesn't exist in memory`)
+            throw new Error(`Computed ${signature} doesn't exist in memory`)
         }
     }
 

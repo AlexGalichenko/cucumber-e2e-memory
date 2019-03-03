@@ -1,5 +1,5 @@
-const Memory = require("../src/Memory");
-const AbstractConstantMap = require("../src/AbstractConstantMap");
+const Memory = require("../lib/Memory");
+const AbstractConstantMap = require("../lib/AbstractConstantMap");
 
 test("get constant variable", () => {
     class ConstantMap extends AbstractConstantMap {
