@@ -1,0 +1,13 @@
+.idea
+bower_components
+node_modules
+device-debug
+publish
+npm-debug.log
+dev.debug.log
+.npmrc
+creds
+temp/
+out/
+test/temp/
+src/
