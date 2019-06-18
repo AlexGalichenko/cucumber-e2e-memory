@@ -15,7 +15,7 @@ Moreover memory module implements several classes to define and store static con
 Define computed value
 ```javascript
 const Memory = require("@cucumber-e2e/memory").Memory;
-const AbstractConstantMap = require("@cucumber-e2e/memory").AbstractCalculablesMap;
+const AbstractComputedMap = require("@cucumber-e2e/memory").AbstractComputedMap;
 
 class ComputedMap extends AbstractComputedMap {
     constructor() {
