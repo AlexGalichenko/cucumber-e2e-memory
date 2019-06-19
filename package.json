@@ -1,6 +1,6 @@
 {
   "name": "@cucumber-e2e/memory",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Memory model for protractor-cucumber-boilerplate project",
   "main": "index.js",
   "scripts": {

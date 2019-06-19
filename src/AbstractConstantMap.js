@@ -4,7 +4,7 @@ const fs = require("fs");
 
 /**
  * Class representing Constant Map
- * @abstract 
+ * @abstract
  * @type {AbstractConstantMap}
  */
 class AbstractConstantMap {
@@ -30,10 +30,7 @@ class AbstractConstantMap {
         if (this.constants[key] !== undefined) {
             throw new Error(`Constant with such key: '${key}' is already created`);
         } else {
-            Object.defineProperty(this.constants, key, {
-                value: value,
-                writable: false
-            });
+            this.constants[key] = value;
         }
     }
 
@@ -53,10 +50,7 @@ class AbstractConstantMap {
         if (this.fileConstants[key] !== undefined) {
             throw new Error(`Constant with such key: '${key}' is already created`);
         } else {
-            Object.defineProperty(this.fileConstants, key, {
-                value: path,
-                writable: false
-            });
+            this.fileConstants[key] = path;
         }
     }
 
@@ -97,6 +91,7 @@ class AbstractConstantMap {
      *}
      *
      * new ConstantMap.init();
+     * @deprecated
      */
     init() {
         Memory.setConstantsInstance(this);

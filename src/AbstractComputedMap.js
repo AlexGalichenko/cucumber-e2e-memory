@@ -68,6 +68,7 @@ class AbstractComputedMap {
      *}
      *
      * new ComputedMap.init();
+     * @deprecated
      */
     init() {
         Memory.setComputedInstance(this);

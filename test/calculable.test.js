@@ -51,3 +51,24 @@ test("get calculable when instance is not defined", () => {
     }
     expect(errorHandler).toThrowError("Instance of computed is not defined");
 });
+
+test("get calculable from merged instance", () => {
+    class ComputedMap extends AbstractComputedMap {
+        constructor() {
+            super();
+            this.defineComputed(/GET_SAME_VALUE\(.+\)/, (a) => a);
+        }
+    }
+    class ComputedMap2 extends AbstractComputedMap {
+        constructor() {
+            super();
+            this.defineComputed(/GET_SAME_VALUE2\(.+\)/, (a) => a);
+        }
+    }
+    Memory.setComputedInstances([
+        new ComputedMap(),
+        new ComputedMap2(),
+    ]);
+    expect(Memory.parseValue("#GET_SAME_VALUE(value)")).toBe("value");
+    expect(Memory.parseValue("#GET_SAME_VALUE2(value)")).toBe("value");
+});

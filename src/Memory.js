@@ -5,12 +5,33 @@
 class Memory {
 
     /**
-     * Set calculable instance
+     * Set computed instance
      * @example Memory.setComputedInstance(new yourComputedInstance())
      * @param {AbstractComputedMap} computedInstance - instance of computed map
      */
     static setComputedInstance(computedInstance) {
-        this.computedInstance = computedInstance;
+        if (this.computedInstance) {
+            this.computedInstance.computed = this.computedInstance.computed.concat(computedInstance.computed)
+        } else {
+            this.computedInstance = computedInstance;
+        }
+    }
+
+    /**
+     * Set computed instances
+     * @example Memory.setComputedInstances([
+     *      new yourComputedInstance(),
+     *      new yourComputedInstance2()
+     *  ])
+     * @param {Array<AbstractComputedMap>} computedInstances - instance of computed map
+     */
+    static setComputedInstances(computedInstances) {
+        if (this.computedInstance) {
+            this.computedInstance.computed = this.computedInstance.computed.concat(...computedInstances.map(instance => instance.computed));
+        } else {
+            this.computedInstance = computedInstances.pop();
+            this.computedInstance.computed = this.computedInstance.computed.concat(...computedInstances.map(instance => instance.computed));
+        }
     }
 
     /**
@@ -19,7 +40,31 @@ class Memory {
      * @param {AbstractConstantMap} constantsInstance - instance of constants map
      */
     static setConstantsInstance(constantsInstance) {
-        this.constantsInstance = constantsInstance;
+        if (this.constantsInstance) {
+            this.constantsInstance.constants = Object.assign(this.constantsInstance.constants, constantsInstance.constants);
+            this.constantsInstance.fileConstants = Object.assign(this.constantsInstance.fileConstants, constantsInstance.fileConstants);
+        } else {
+            this.constantsInstance = constantsInstance;
+        }
+    }
+
+    /**
+     * Set constant instance
+     * @example Memory.setConstantsInstances([
+     *      new yourConstantsInstance(),
+     *      new yourConstantsInstance2()
+     * ])
+     * @param {Array<AbstractConstantMap>} constantsInstances - instances of constants map
+     */
+    static setConstantsInstances(constantsInstances) {
+        if (this.constantsInstance) {
+            this.constantsInstance.constants = Object.assign(this.constantsInstance.constants, ...constantsInstances.map(instance => instance.constants));
+            this.constantsInstance.fileConstants = Object.assign(this.constantsInstance.fileConstants, ...constantsInstances.map(instance => instance.fileConstants));
+        } else {
+            this.constantsInstance = constantsInstances.pop();
+            this.constantsInstance.constants = Object.assign(this.constantsInstance.constants, ...constantsInstances.map(instance => instance.constants));
+            this.constantsInstance.fileConstants = Object.assign(this.constantsInstance.fileConstants, ...constantsInstances.map(instance => instance.fileConstants));
+        }
     }
 
     /**
