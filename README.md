@@ -3,11 +3,18 @@
 Memory is the module that allows to easily store and share data between steps.
 To start using memory just import corresponing class into your tests.
 
-To get element from storage call parseValue() method with argument. If you pass simple string that parseValue reuturns it as is.
+To get element from storage call parseValue() method with argument. If you pass simple string that parseValue will return it as is.
 ```javascript
 const Memory = require("@cucumber-e2e/memory").Memory;
 Memory.setValue("YourKey", "Your Value");
-Memort.parseValue("$YourKey"); //"Your Value"
+Memory.parseValue("$YourKey"); //"Your Value"
+```
+
+You can also parse string and replace {memoryKey} patterns with memory values via parseString() method.
+```javascript
+const Memory = require("@cucumber-e2e/memory").Memory;
+Memory.setValue("YourKey", "Your Value");
+Memory.parseString("String with {$YourKey}"); //"String with Your Value"
 ```
 
 Moreover memory module implements several classes to define and store static constant and dynamical values

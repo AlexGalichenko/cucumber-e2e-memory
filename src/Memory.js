@@ -62,6 +62,21 @@ class Memory {
     }
 
     /**
+     * Replace param templates withing string with their values
+     * @param {string} str - string to parse
+     * @return {string} - parsed
+     */
+    static parseString(str) {
+        const PARSE_STRING_REGEXP = /{((?:\$|#|!{1,2})?(?:[^$#!]?.+))}/;
+        if (PARSE_STRING_REGEXP.test(str)) {
+            const matches = str.match(PARSE_STRING_REGEXP);
+            matches.shift();
+            console.log(matches);
+            return matches.reduce((string, variable) => string.replace(`{${variable}}`, Memory.parseValue(variable)), str);
+        } else return str
+    }
+
+    /**
      * Return value from memory
      * @param {string} alias - key
      * @return {string|number|Object} - value by key
