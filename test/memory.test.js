@@ -1,4 +1,5 @@
 const Memory = require("../lib/Memory");
+const AbstractConstantMap = require("../lib/AbstractConstantMap");
 
 test("define memory variable", () => {
     Memory.setValue("key", 1);
@@ -22,4 +23,23 @@ test("get not defined memory variable", () => {
         Memory.parseValue("$notDefinedKey")
     }
     expect(errorHandler).toThrowError("notDefinedKey doesn't exist in memory");
+});
+
+test("get parsed string with var", () => {
+    Memory.setValue("key", "value");
+
+    expect(Memory.parseString("This is parsed string containing {$key} value"))
+        .toBe("This is parsed string containing value value");
+});
+
+test("get parsed string with const", () => {
+    class ConstantMap extends AbstractConstantMap {
+        constructor() {
+            super();
+            this.defineConstant("constantKey", "value");
+        }
+    }
+    Memory.setConstantsInstance(new ConstantMap());
+    expect(Memory.parseString("This is parsed string containing {!constantKey} value"))
+        .toBe("This is parsed string containing value value");
 });
