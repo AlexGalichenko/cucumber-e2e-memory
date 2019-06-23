@@ -71,7 +71,6 @@ class Memory {
         if (PARSE_STRING_REGEXP.test(str)) {
             const matches = str.match(PARSE_STRING_REGEXP);
             matches.shift();
-            console.log(matches);
             return matches.reduce((string, variable) => string.replace(`{${variable}}`, Memory.parseValue(variable)), str);
         } else return str
     }
