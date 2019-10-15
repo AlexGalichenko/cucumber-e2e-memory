@@ -36,6 +36,28 @@ test("get calculable with 2 arguments", () => {
     expect(Memory.parseValue("#CONCAT(str, ing)")).toBe("string");
 });
 
+test("parse string", () => {
+    class CalculablesMap extends AbstractComputedMap {
+        constructor() {
+            super();
+            this.defineComputed(/CONCAT\(.+\)/, (a, b) => a + b);
+        }
+    }
+    Memory.setComputedInstance(new CalculablesMap());
+    expect(Memory.parseString("string {#CONCAT(str, ing)} string")).toBe("string string string");
+});
+
+test("promise parse string", async () => {
+    class CalculablesMap extends AbstractComputedMap {
+        constructor() {
+            super();
+            this.defineComputed(/CONCAT\(.+\)/, (a, b) => Promise.resolve(a + b));
+        }
+    }
+    Memory.setComputedInstance(new CalculablesMap());
+    expect(await Memory.parseString("string {#CONCAT(str, ing)} string")).toBe("string string string");
+});
+
 test("get not defined calculable", () => {
     Memory.setComputedInstance(new AbstractComputedMap());
     function errorHandler() {
