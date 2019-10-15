@@ -64,14 +64,29 @@ class Memory {
     /**
      * Replace param templates withing string with their values
      * @param {string} str - string to parse
-     * @return {string} - parsed
+     * @return {string|Promise<string>} - parsed
      */
     static parseString(str) {
         const PARSE_STRING_REGEXP = /{((?:\$|#|!{1,2})?(?:[^$#!]?.+))}/;
         if (PARSE_STRING_REGEXP.test(str)) {
             const matches = str.match(PARSE_STRING_REGEXP);
             matches.shift();
-            return matches.reduce((string, variable) => string.replace(`{${variable}}`, Memory.parseValue(variable)), str);
+            if (matches.some(alias => Memory.parseValue(alias) instanceof Promise)) {
+                const promises = matches.map(alias => Memory.parseValue(alias));
+                return Promise
+                    .all(promises)
+                    .then(pmatches => pmatches
+                        .map((match, i) => ({
+                            alias: matches[i],
+                            value: match
+                        }))
+                        .reduce((string, variable) => string.replace(`{${variable.alias}}`, variable.value), str))
+                    .catch(e => {
+                        throw e
+                    })
+            } else {
+                return matches.reduce((string, variable) => string.replace(`{${variable}}`, Memory.parseValue(variable)), str);
+            }
         } else return str
     }
 
