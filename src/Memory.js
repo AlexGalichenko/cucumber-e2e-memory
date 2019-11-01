@@ -67,10 +67,9 @@ class Memory {
      * @return {string|Promise<string>} - parsed
      */
     static parseString(str) {
-        const PARSE_STRING_REGEXP = /{((?:\$|#|!{1,2})?(?:[^$#!]?.+))}/;
+        const PARSE_STRING_REGEXP = /{((?:\$|#|!{1,2})?(?:[^$#!]?.+?))}/g;
         if (PARSE_STRING_REGEXP.test(str)) {
-            const matches = str.match(PARSE_STRING_REGEXP);
-            matches.shift();
+            const matches = str.match(PARSE_STRING_REGEXP).map(match => match.replace(/{|}/g, ``));
             if (matches.some(alias => Memory.parseValue(alias) instanceof Promise)) {
                 const promises = matches.map(alias => Memory.parseValue(alias));
                 return Promise
