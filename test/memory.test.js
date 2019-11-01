@@ -43,3 +43,11 @@ test("get parsed string with const", () => {
     expect(Memory.parseString("This is parsed string containing {!constantKey} value"))
         .toBe("This is parsed string containing value value");
 });
+
+test("get parsed string with multiple variable", () => {
+    Memory.setValue("firstKey", "firstValue");
+    Memory.setValue("secondKey", "secondValue");
+    Memory.setValue("thirdKey", "thirdValue");
+    expect(Memory.parseString("This string should contain three values: {$firstKey}, {$secondKey}, {$thirdKey}."))
+        .toBe("This string should contain three values: firstValue, secondValue, thirdValue.");
+});
