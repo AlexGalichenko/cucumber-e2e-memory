@@ -38,6 +38,7 @@ class Memory {
 
     /**
      * Returns value if exists in memory
+     * @private
      * @param {string} key - key
      * @return {string|number|Object} - parsed value
      * @throws {Error}
@@ -67,11 +68,15 @@ class Memory {
      * @return {string|Promise<string>} - parsed
      */
     static parseString(str) {
+        const MEMORY_REGEXP = /^(\$|#|!{1,2})?([^$#!]?.+)$/;
         const PARSE_STRING_REGEXP = /{((?:\$|#|!{1,2})?(?:[^$#!]?.+?))}/g;
-        if (PARSE_STRING_REGEXP.test(str)) {
+        if (MEMORY_REGEXP.test(str)) {
+            return this.parseValue(str)
+        } 
+        else if (PARSE_STRING_REGEXP.test(str)) {
             const matches = str.match(PARSE_STRING_REGEXP).map(match => match.replace(/{|}/g, ``));
-            if (matches.some(alias => Memory.parseValue(alias) instanceof Promise)) {
-                const promises = matches.map(alias => Memory.parseValue(alias));
+            if (matches.some(alias => this.parseValue(alias) instanceof Promise)) {
+                const promises = matches.map(alias => this.parseValue(alias));
                 return Promise
                     .all(promises)
                     .then(pmatches => pmatches
@@ -83,10 +88,10 @@ class Memory {
                     .catch(e => {
                         throw e
                     })
-            } else {
-                return matches.reduce((string, variable) => string.replace(`{${variable}}`, Memory.parseValue(variable)), str);
-            }
-        } else return str
+            } 
+            else return matches.reduce((string, variable) => string.replace(`{${variable}}`, this.parseValue(variable)), str);
+        }
+        else return str
     }
 
     /**
