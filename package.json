@@ -1,7 +1,7 @@
 {
   "name": "@cucumber-e2e/memory",
-  "version": "0.2.2",
-  "description": "Memory model for protractor-cucumber-boilerplate project",
+  "version": "0.3.0",
+  "description": "Memory model for cucumber frameworks",
   "main": "index.js",
   "scripts": {
     "docs": "jsdoc ./src/ -r -t ./node_modules/minami",
