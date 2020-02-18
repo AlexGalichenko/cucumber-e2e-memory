@@ -3,28 +3,28 @@
 Memory is the module that allows to easily store and share data between steps.
 To start using memory just import corresponing class into your tests.
 
-To get element from storage call parseValue() method with argument. If you pass simple string that parseValue will return it as is.
+To get element from storage call getValue() method with argument. If you pass simple string that getValue will return it as is.
 ```javascript
-const Memory = require("@cucumber-e2e/memory").Memory;
+const { Memory } = require("@cucumber-e2e/memory");
 Memory.setValue("YourKey", "Your Value");
-Memory.parseValue("$YourKey"); //"Your Value"
+Memory.getValue("$YourKey"); //"Your Value"
 ```
 
 You can also parse string and replace {memoryKey} patterns with memory values via parseString() method.
 ```javascript
-const Memory = require("@cucumber-e2e/memory").Memory;
+const { Memory } = require("@cucumber-e2e/memory");
 Memory.setValue("YourKey", "Your Value");
-Memory.parseString("String with {$YourKey}"); //"String with Your Value"
+Memory.getValue("String with {$YourKey}"); //"String with Your Value"
 ```
 
 Moreover memory module implements several classes to define and store static constant and dynamical values
 
 Define computed value
 ```javascript
-const Memory = require("@cucumber-e2e/memory").Memory;
-const AbstractComputedMap = require("@cucumber-e2e/memory").AbstractComputedMap;
+const { Memory } = require("@cucumber-e2e/memory");
+const { ComputedMap } = require("@cucumber-e2e/memory");
 
-class ComputedMap extends AbstractComputedMap {
+class YourComputedMap extends ComputedMap {
     constructor() {
         super();
         this.defineComputed(/^FUNCTION$/, () => {
@@ -32,23 +32,23 @@ class ComputedMap extends AbstractComputedMap {
         });
     }
 }
-Memory.setComputedInstance(new ComputedMap()); //attach ComputedMap to Memory
-Memory.parseValue("#FUNCTION"); //"value"
+Memory.setComputedInstance(new YourComputedMap()); //attach ComputedMap to Memory
+Memory.getValue("#FUNCTION"); //"value"
 ```
 
 Define constant
 ```javascript
-const Memory = require("@cucumber-e2e/memory").Memory;
-const AbstractConstantMap = require("@cucumber-e2e/memory").AbstractConstantMap;
+const { Memory } = require("@cucumber-e2e/memory");
+const { ConstantMap } = require("@cucumber-e2e/memory");
 
-class ConstantMap extends AbstractConstantMap {
+class YourConstantMap extends ConstantMap {
     constructor() {
         super();
         this.defineConstant("constantKey", "value");
         this.defineFileConstant("fileConstantKey", "./test/file.txt");
     }
 }
-Memory.setConstantsInstance(new ConstantMap()); attach ConstantMap to Memory
-Memory.parseValue("!constantKey"); //"value"
-Memory.parseValue("!!fileConstantKey"); // data from "./test/file.txt" file
+Memory.setConstantsInstance(new YourConstantMap()); //attach ConstantMap to Memory
+Memory.getValue("!constantKey"); //"value"
+Memory.getValue("!!fileConstantKey"); // data from "./test/file.txt" file
 ```

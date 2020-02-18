@@ -32,7 +32,7 @@ class AbstractComputedMap {
     /**
      * Get calculated value of defined computed
      * @param {string} signature - signature of computed value
-     * @return {any} - calculated value
+     * @return {*} - calculated value
      */
     getComputed(signature) {
         const computed = this.computed.find(item => item.signature.test(signature));

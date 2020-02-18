@@ -10,17 +10,17 @@ test("define memory variable", () => {
 test("get memory variable", () => {
     Memory.setValue("key", "value");
 
-    expect(Memory.parseValue("$key")).toBe("value");
+    expect(Memory.getValue("$key")).toBe("value");
 });
 
 test("pass simple value", () => {
-    expect(Memory.parseValue("simpleValue")).toBe("simpleValue");
+    expect(Memory.getValue("simpleValue")).toBe("simpleValue");
 });
 
 test("get not defined memory variable", () => {
     Memory.setValue("key", "init");
     function errorHandler() {
-        Memory.parseValue("$notDefinedKey")
+        Memory.getValue("$notDefinedKey")
     }
     expect(errorHandler).toThrowError("notDefinedKey doesn't exist in memory");
 });
@@ -28,7 +28,7 @@ test("get not defined memory variable", () => {
 test("get parsed string with var", () => {
     Memory.setValue("key", "value");
 
-    expect(Memory.parseString("This is parsed string containing {$key} value"))
+    expect(Memory.getValue("This is parsed string containing {$key} value"))
         .toBe("This is parsed string containing value value");
 });
 
@@ -40,7 +40,7 @@ test("get parsed string with const", () => {
         }
     }
     Memory.setConstantsInstance(new ConstantMap());
-    expect(Memory.parseString("This is parsed string containing {!constantKey} value"))
+    expect(Memory.getValue("This is parsed string containing {!constantKey} value"))
         .toBe("This is parsed string containing value value");
 });
 
@@ -48,6 +48,6 @@ test("get parsed string with multiple variable", () => {
     Memory.setValue("firstKey", "firstValue");
     Memory.setValue("secondKey", "secondValue");
     Memory.setValue("thirdKey", "thirdValue");
-    expect(Memory.parseString("This string should contain three values: {$firstKey}, {$secondKey}, {$thirdKey}."))
+    expect(Memory.getValue("This string should contain three values: {$firstKey}, {$secondKey}, {$thirdKey}."))
         .toBe("This string should contain three values: firstValue, secondValue, thirdValue.");
 });
