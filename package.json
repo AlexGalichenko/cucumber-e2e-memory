@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "docs": "jsdoc ./src/ -r -t ./node_modules/minami",
+    "pretest": "npm run build",
     "test": "jest",
     "build": "babel src -d lib",
     "prepublish": "npm run build"
