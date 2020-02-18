@@ -9,7 +9,7 @@ test("get constant variable", () => {
         }
     }
     Memory.setConstantsInstance(new ConstantMap());
-    expect(Memory.parseValue("!constantKey")).toBe("value");
+    expect(Memory.getValue("!constantKey")).toBe("value");
 });
 
 test("get file constant variable", () => {
@@ -20,13 +20,13 @@ test("get file constant variable", () => {
         }
     }
     Memory.setConstantsInstance(new ConstantMap());
-    expect(Memory.parseValue("!!fileConstantKey")).toBe("file constant");
+    expect(Memory.getValue("!!fileConstantKey")).toBe("file constant");
 });
 
 test("get not defined constant", () => {
     Memory.setConstantsInstance(new AbstractConstantMap());
     function errorHandler() {
-        Memory.parseValue("!notDefinedKey")
+        Memory.getValue("!notDefinedKey")
     }
     expect(errorHandler).toThrowError("Constant notDefinedKey doesn't exist in memory");
 });
@@ -34,7 +34,7 @@ test("get not defined constant", () => {
 test("get not defined constant", () => {
     Memory.setConstantsInstance(new AbstractConstantMap());
     function errorHandler() {
-        Memory.parseValue("!!notDefinedKey")
+        Memory.getValue("!!notDefinedKey")
     }
     expect(errorHandler).toThrowError("File constant notDefinedKey doesn't exist in memory");
 });
@@ -42,7 +42,7 @@ test("get not defined constant", () => {
 test("get constant when instance is not defined", () => {
     Memory.constantsInstance = undefined;
     function errorHandler() {
-        Memory.parseValue("!notDefinedKey")
+        Memory.getValue("!notDefinedKey")
     }
     expect(errorHandler).toThrowError("Instance of constants is not defined");
 });
@@ -50,7 +50,7 @@ test("get constant when instance is not defined", () => {
 test("get file constant when instance is not defined", () => {
     Memory.constantsInstance = undefined;
     function errorHandler() {
-        Memory.parseValue("!!notDefinedKey")
+        Memory.getValue("!!notDefinedKey")
     }
     expect(errorHandler).toThrowError("Instance of constants is not defined");
 });

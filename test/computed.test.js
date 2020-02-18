@@ -11,7 +11,7 @@ test("get calculable", () => {
         }
     }
     Memory.setComputedInstance(new ComputedMap());
-    expect(Memory.parseString("#FUNCTION")).toBe("value");
+    expect(Memory.getValue("#FUNCTION")).toBe("value");
 });
 
 test("get calculable with 1 arguments", () => {
@@ -22,7 +22,7 @@ test("get calculable with 1 arguments", () => {
         }
     }
     Memory.setComputedInstance(new CalculablesMap());
-    expect(Memory.parseString("#GET_SAME_VALUE(value)")).toBe("value");
+    expect(Memory.getValue("#GET_SAME_VALUE(value)")).toBe("value");
 });
 
 test("get calculable with 2 arguments", () => {
@@ -33,7 +33,7 @@ test("get calculable with 2 arguments", () => {
         }
     }
     Memory.setComputedInstance(new CalculablesMap());
-    expect(Memory.parseString("#CONCAT(str, ing)")).toBe("string");
+    expect(Memory.getValue("#CONCAT(str, ing)")).toBe("string");
 });
 
 test("parse string", () => {
@@ -44,7 +44,7 @@ test("parse string", () => {
         }
     }
     Memory.setComputedInstance(new CalculablesMap());
-    expect(Memory.parseString("string {#CONCAT(str, ing)} string")).toBe("string string string");
+    expect(Memory.getValue("string {#CONCAT(str, ing)} string")).toBe("string string string");
 });
 
 test("promise parse string", async () => {
@@ -55,13 +55,13 @@ test("promise parse string", async () => {
         }
     }
     Memory.setComputedInstance(new CalculablesMap());
-    expect(await Memory.parseString("string {#CONCAT(str, ing)} string")).toBe("string string string");
+    expect(await Memory.getValue("string {#CONCAT(str, ing)} string")).toBe("string string string");
 });
 
 test("get not defined calculable", () => {
     Memory.setComputedInstance(new AbstractComputedMap());
     function errorHandler() {
-        Memory.parseString("#notDefinedKey")
+        Memory.getValue("#notDefinedKey")
     }
     expect(errorHandler).toThrowError("Computed notDefinedKey doesn't exist in memory");
 });
@@ -69,7 +69,7 @@ test("get not defined calculable", () => {
 test("get calculable when instance is not defined", () => {
     Memory.computedInstance = undefined;
     function errorHandler() {
-        Memory.parseString("#notDefinedKey")
+        Memory.getValue("#notDefinedKey")
     }
     expect(errorHandler).toThrowError("Instance of computed is not defined");
 });
